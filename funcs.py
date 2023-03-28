@@ -36,7 +36,7 @@ class NewClass():
         headers = CaseInsensitiveDict()
         headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
         headers["Content-Length"] = "0" 
-        with open(f"{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-p&p.xlsx", 'rb') as f:
+        with open(f"/home/ariel/dct_admindata_automation/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-p&p.xlsx", 'rb') as f:
             data = f.read()
         resp = requests.post(url, headers=headers, data=data)  
         self.log.log(resp.status_code)
