@@ -5,9 +5,11 @@ from smartsheet_grid import grid
 import requests
 import json
 import time
-from globals import smartsheet_token
+from globals import smartsheet_token, sensative_egnyte_token
 from logger import ghetto_logger
 import datetime
+import requests
+from requests.structures import CaseInsensitiveDict
 #endregion
 
 class NewClass():
@@ -27,14 +29,22 @@ class NewClass():
         sheet = grid(self.sheet_id)
         sheet.fetch_content()
         sheet.df.to_excel(file_path, index=False)
-    
-    def format_datename(self):
-        '''formats the date name coby wanted'''
+
+    def upload_tocloud(self, file):
+        '''puts file on egnyte'''
+        url = f"https://dowbuilt.egnyte.com/pubapi/v1/fs-content/Shared/Digital%20Construction%20Team/03_DCT%20Admin/Historical%20Data/Projects_%26_Planning_Data/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-p&p.xlsx"   
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
+        headers["Content-Length"] = "0" 
+        with open(f"{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-p&p.xlsx", 'rb') as f:
+            data = f.read()
+        resp = requests.post(url, headers=headers, data=data)  
+        self.log.log(resp.status_code)
 
     def run(self):
         '''runs main script as intended'''
         self.log.log('ran script')
-        self.export_sheet(r'Z:\Shared\Digital Construction Team\03_DCT Admin\Historical Data\Projects_&_Planning_Data\_' + f'{self.now.strftime("%Y.%m.%d.%H.%S")}_dct-p&p.xlsx')
+        self.export_sheet(f'{self.now.strftime("%Y.%m.%d.%H.%S")}_dct-p&p.xlsx')
 
 if __name__ == "__main__":
     config = {
