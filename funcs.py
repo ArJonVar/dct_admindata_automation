@@ -33,6 +33,7 @@ class NewClass():
 
     def run(self):
         '''runs main script as intended'''
+        self.log.log('ran script')
         self.export_sheet(r'Z:\Shared\Digital Construction Team\03_DCT Admin\Historical Data\Projects_&_Planning_Data\_' + f'{self.now.strftime("%Y.%m.%d.%H.%S")}_dct-p&p.xlsx')
 
 if __name__ == "__main__":
