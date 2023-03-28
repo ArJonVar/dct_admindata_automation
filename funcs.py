@@ -36,7 +36,7 @@ class NewClass():
         headers = CaseInsensitiveDict()
         headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
         headers["Content-Length"] = "0" 
-        with open(f"/home/ariel/dct_admindata_automation/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-p&p.xlsx", 'rb') as f:
+        with open(f"/home/ariel/dct_admindata_automation/backups/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-p&p.xlsx", 'rb') as f:
             data = f.read()
         resp = requests.post(url, headers=headers, data=data)  
         self.log.log(resp.status_code)
@@ -44,7 +44,9 @@ class NewClass():
     def run(self):
         '''runs main script as intended'''
         self.log.log('ran script')
-        self.export_sheet(f'{self.now.strftime("%Y.%m.%d.%H.%S")}_dct-p&p.xlsx')
+        path = f'backups/{self.now.strftime("%Y.%m.%d.%H.%S")}_dct-p&p.xlsx'
+        self.export_sheet(path)
+        self.log.log(path)
 
 if __name__ == "__main__":
     config = {
