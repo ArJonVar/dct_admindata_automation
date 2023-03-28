@@ -37,7 +37,7 @@ class NewClass():
         headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
         headers["Content-Length"] = "0" 
         with open(f"/home/ariel/dct_admindata_automation/backups/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-PnP.csv", 'rb') as f:
-            data = f.read()
+            data = f
         resp = requests.post(url, headers=headers, data=data)  
         self.log.log(resp.status_code)
 
