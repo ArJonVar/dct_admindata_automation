@@ -30,7 +30,7 @@ class NewClass():
         sheet.fetch_content()
         sheet.df.to_csv(file_path, index=False)
 
-    def upload_tocloud(self, file):
+    def upload_tocloud(self):
         '''puts file on egnyte'''
         url = f"https://dowbuilt.egnyte.com/pubapi/v1/fs-content/Shared/Digital%20Construction%20Team/03_DCT%20Admin/Historical%20Data/Projects_%26_Planning_Data/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-PnP.csv"   
         headers = CaseInsensitiveDict()
@@ -43,7 +43,7 @@ class NewClass():
 
     
         resp = requests.post(url, headers=headers, data=data)  
-        self.log.log(resp.status_code)
+        self.log.log(resp.text)
 
     def run(self):
         '''runs main script as intended'''
@@ -51,6 +51,7 @@ class NewClass():
         path = f"backups/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-PnP.csv"
         self.export_sheet(path)
         self.log.log(path)
+        self.upload_tocloud()
 
 if __name__ == "__main__":
     config = {
