@@ -39,7 +39,7 @@ class NewClass():
 
         headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
         headers["Content-Length"] = str(len(data))
-        headers["Content-Type"] = "application/octet-stream",
+        headers["Content-Type"] = "application/octet-stream"
 
     
         resp = requests.post(url, headers=headers, data=data)  
