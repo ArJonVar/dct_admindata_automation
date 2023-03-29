@@ -34,10 +34,14 @@ class NewClass():
         '''puts file on egnyte'''
         url = f"https://dowbuilt.egnyte.com/pubapi/v1/fs-content/Shared/Digital%20Construction%20Team/03_DCT%20Admin/Historical%20Data/Projects_%26_Planning_Data/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-PnP.csv"   
         headers = CaseInsensitiveDict()
-        headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
-        headers["Content-Length"] = "0" 
         with open(f"/home/ariel/dct_admindata_automation/backups/{self.now.strftime('%Y.%m.%d.%H.%S')}_dct-PnP.csv", 'rb') as f:
-            data = f
+            data = f.read()
+
+        headers["Authorization"] = f"Bearer {sensative_egnyte_token}"
+        headers["Content-Length"] = str(len(data))
+        headers["Content-Type"] = "application/octet-stream",
+
+    
         resp = requests.post(url, headers=headers, data=data)  
         self.log.log(resp.status_code)
 
